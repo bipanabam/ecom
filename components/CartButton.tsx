@@ -11,7 +11,7 @@ const CartButton = () => {
     >
       <a href="#">
         <ShoppingCart size={22} strokeWidth={1.5} />
-        <span className="absolute -top-2 -right-1 flex h-2 w-2 bg-[#FAFAFA]">0</span>
+        <span className="absolute -top-2 -right-1 flex h-2 w-2">0</span>
       </a>
     </button>
   )

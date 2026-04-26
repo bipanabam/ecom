@@ -30,11 +30,9 @@ export default function RootLayout({
       lang="en"
       className={`${epilogue.variable} ${inter.variable} min-h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col bg-white">
+      <body className="min-h-screen flex flex-col bg-white mx-auto">
         <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
+        {children}
         <Footer />
       </body>
     </html>

@@ -7,6 +7,8 @@
   --secondary: #CCFF00;
   --tertiary: #1A1A1A;
   --neutral: #737373;
+  --card: #FAFAFA;
+  --borderColor: #ACADAD;
 }
 
 @theme inline {
@@ -16,6 +18,8 @@
   --color-secondary: var(--secondary);
   --color-tertiary: var(--tertiary);
   --color-neutral: var(--neutral);
+  --color-card: var(--card);
+  --color-borderColor: var(--borderColor);
   --font-epilogue: var(--font-epilogue);
   --font-inter: var(--font-inter)
 }
