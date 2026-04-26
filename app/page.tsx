@@ -1,9 +1,14 @@
-import FeaturedProduct from "@/components/FeaturedProduct"
+import FeaturedProduct from "@/components/FeaturedProduct";
+import ProductList from "@/components/ProductList";
 
-const Home = () => {
+const Home = async ({searchParams} : { searchParams: Promise<{ category?: string }> | null }) => {
+  const params = await searchParams;
+  const category = params?.category || "all";
+
   return (
-    <div className='relative w-full'>
+    <div className='w-full'>
       <FeaturedProduct />
+      <ProductList category={category} />
     </div>
   )
 }
