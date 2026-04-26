@@ -8,7 +8,7 @@ const Home = async ({searchParams} : { searchParams: Promise<{ category?: string
   return (
     <div className='w-full'>
       <FeaturedProduct />
-      <ProductList category={category} />
+      <ProductList category={category} params="homepage" />
     </div>
   )
 }
