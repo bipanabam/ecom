@@ -77,7 +77,7 @@ export default Navbar
 const NavItem = ({ href, label, active = false }: { href: string; label: string; active?: boolean }) => {
   return (
     <Link href={href} className="relative group">
-      <p className={`font-inter text-md font-bold tracking-widest transition-colors ${
+      <p className={`font-inter text-sm lg:text-[16px] font-bold tracking-widest transition-colors ${
           active ? "text-foreground" : "text-neutral hover:text-foreground"
         }`}>
         {label}
