@@ -40,12 +40,12 @@ const Navbar = () => {
   });
   return (
     <header className="sticky top-0 z-50 w-full">
-        <nav ref={navRef} className="flex items-center justify-between px-10 py-6 bg-white transition-all">
+        <nav ref={navRef} className="flex items-center justify-between px-7 py-4 sm:px-10 sm:py-6 bg-white transition-all">
           {/* Left */}
           <div className="flex items-center md:gap-6 lg:gap-12">
             <Link href="/" className="">
               {/* Company Logo */}
-              <h1 className="font-epilogue text-3xl font-extrabold tracking-[-0.04em] text-foreground">
+              <h1 className="font-epilogue text-2xl sm:text-3xl font-extrabold tracking-[-0.04em] text-foreground">
                 SHOPEEEE
               </h1>
             </Link>

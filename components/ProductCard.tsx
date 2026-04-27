@@ -27,6 +27,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
             src={product.images[productType.color]}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 100vw, 33vw"
             loading='eager'  
             className="object-cover hover:scale-105 transition-all duration-300"
           />
