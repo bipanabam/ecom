@@ -2,17 +2,34 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import { ShoppingCart } from "lucide-react";
 
-import { ProductType } from "@/type";
+import { Product } from "@/generated/prisma/client";
 
-const ProductCard = ({ product }: { product: ProductType }) => {
+const ProductCard = ({ product }: { product: Product }) => {
+  const defaultVariant = product.variants[0];
+  const sizes = useMemo(
+    () => Array.from(new Set(product.variants.map(v => v.size))),
+    [product.variants]
+  );
+
+  const colors = useMemo(
+    () => Array.from(new Set(product.variants.map(v => v.color))),
+    [product.variants]
+  );
+  
   const [productType, setProductType] = useState({
-    size: product.sizes[0],
-    color: product.colors[0],
+    size: defaultVariant?.size || "",
+    color: defaultVariant?.color || "",
   });
+
+  const selectedVariant = product.variants.find(
+    (v) =>
+      v.color === productType.color &&
+      v.size === productType.size
+  );
 
   const handleProductTypeChange = ({type, value}: {type: "size" | "color", value: string}) => {
     setProductType((prev) => ({ ...prev, [type]: value }));
@@ -24,7 +41,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-2/3">
           <Image
-            src={product.images[productType.color]}
+            src={selectedVariant?.images[0] || ""}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, 33vw"
@@ -42,30 +59,33 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           {/* Sizes */}
           <div className="flex flex-col gap-1">
             <span className="text-neutral">Size</span>
-            <select name="size" id="size" className="ring ring-borderColor/50 rounded-md text-foreground/70 px-2 py-1">
-              {product.sizes.map((size) => (
-                <option 
-                key={size} 
-                value={size} 
-                onChange={e => handleProductTypeChange({ type: "size", value: e.target.value })}
-                >
-                  {size.toUpperCase()}
-                </option>
-              ))}
+            <select name="size" id="size" 
+              className="ring ring-borderColor/50 rounded-md text-foreground/70 px-2 py-1"
+              onChange={e => handleProductTypeChange({ type: "size", value: e.target.value })}
+              >
+                {sizes.map((size) => (
+                  <option key={size} value={size}>
+                    {size.toUpperCase()}
+                  </option>
+                ))}
             </select>
           </div>
           {/* Colors */}
           <div className="flex flex-col gap-1">
             <span className="text-neutral">Color</span>
             <div className="flex items-center gap-2">
-              {product.colors.map((color) => (
-                <div 
-                className={`cursor-pointer border-2 rounded-full ${productType.color === color ? "border-borderColor" : "border-transparent"} p-[1.5]`}
-                key={color}
-                onClick={() => handleProductTypeChange({type:"color", value:color})}
+              {colors.map((color) => (
+                <div
+                  key={color}
+                  className={`cursor-pointer border-2 rounded-full ${
+                    productType.color === color ? "border-borderColor" : "border-transparent"
+                  } p-[1.5]`}
+                  onClick={() => handleProductTypeChange({ type: "color", value: color })}
                 >
-                  <div className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: color }} />
+                  <div
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
                 </div>
               ))}
             </div>
@@ -75,7 +95,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         {/* Price and Add to Cart */}
         <div className="flex items-center justify-between">
 
-          <p className="text-lg font-medium text-foreground">${product.price.toFixed(2)}</p>
+          <p className="text-lg font-medium text-foreground">${product.basePrice.toFixed(2)}</p>
           <button className="ring-1 ring-borderColor/50 shadow-lg rounded-md px-2 py-1 text-sm cursor-pointer text-foreground flex items-center gap-2 hover:bg-foreground hover:text-white transition-colors">
             <ShoppingCart className="w-4 h-4" />
             Add to Cart

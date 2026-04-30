@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,7 +14,7 @@ datasource db {
 
 model Product {
   id          Int       @id @default(autoincrement())
-  title       String
+  name       String
   slug        String    @unique
   description String?
   overview    String?

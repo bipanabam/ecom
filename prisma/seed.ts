@@ -1,4 +1,4 @@
-import { PrismaClient} from "../lib/generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 
@@ -14,25 +14,28 @@ const prisma = new PrismaClient({
 async function seed () {
     const products = [
         {
-            title: "Nike Air Max 270",
+            name: "Nike Air Max 270",
             slug: "nike-air-max-270",
             basePrice: 24.99,
             colors: ["red"],
+            tags: ["shoes", "nike", "air max"],
         },
         {
-            title: "New Balance 990v5",
+            name: "New Balance 990v5",
             slug: "new-balance-990v5",
             description: "The New Balance 990v5 combines classic design with modern comfort, featuring a premium leather upper and responsive cushioning.",
             overview: "The New Balance 990v5 is a perfect blend of style and comfort. With its premium leather upper and responsive cushioning, it's designed to provide all-day support. Whether you're hitting the gym or running errands, these sneakers will keep you comfortable and looking great.",
             basePrice: 39.99,
+            tags: ["shoes", "new balance", "990v5"],
             colors: ["green", "black"],
         },
         {
-            title: "Classic Anime White T-Shirt",
+            name: "Classic Anime White T-Shirt",
             slug: "classic-anime-white-tshirt",
             description: "A timeless white t-shirt made from 100% cotton. Perfect for any casual occasion.",
             basePrice: 19.99,
             overview: "This classic white t-shirt features a comfortable fit and is made from high-quality cotton. It's perfect for everyday wear and can be easily styled with jeans, shorts, or skirts.", 
+            tags: ["clothing", "anime", "t-shirt"],
             colors: ["white"],
         }
     ];
@@ -40,11 +43,12 @@ async function seed () {
     for (const p of products) {
         const created = await prisma.product.create({
             data: {
-            title: p.title,
+            name: p.name,
             slug: p.slug,
             description: p.description,
             overview: p.overview || "",
             basePrice: p.basePrice,
+            tags: p.tags,
             },
         });
 
